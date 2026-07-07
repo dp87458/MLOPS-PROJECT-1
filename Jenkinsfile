@@ -42,7 +42,7 @@ pipeline{
                 ]) {
                     script {
                         echo 'Building and Pushing Docker Image to AWS ECR.............'
-                        sh '''
+                        sh """
                         # 1. Authenticate Docker directly to your European AWS ECR Registry
                         aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
 
@@ -51,7 +51,7 @@ pipeline{
 
                         # 3. Push the finalized Docker image live straight to your AWS Cloud repository
                         docker push ${IMAGE_URI}:latest
-                        '''
+                        """
                     }
                 }
             }
