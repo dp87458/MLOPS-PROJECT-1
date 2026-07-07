@@ -1,22 +1,12 @@
-pipeline {
+pipeline{
     agent any
 
-    stages {
-        stage('Environment Setup') {
-            steps {
-                script {
-                    echo 'Installing model dependencies safely...'
-                    // The --break-system-packages flag bypasses the Linux environment block securely!
-                    sh 'pip install --no-cache-dir --break-system-packages -r requirements.txt'
-                }
-            }
-        }
-
-        stage('Model Training & MLflow Logging') {
-            steps {
-                script {
-                    echo 'Executing hotel reservation model training pipeline...'
-                    sh 'python model_training.py'
+    stages{
+        stage('Cloning Github repo to Jenkins'){
+            steps{
+                script{
+                    echo 'Cloning Github repo to Jenkins...........'
+                    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-token', url: 'https://github.com/dp87458/MLOPS-PROJECT-1.git']])
                 }
             }
         }
