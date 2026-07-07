@@ -43,14 +43,14 @@ pipeline{
                     script {
                         echo 'Building and Pushing Docker Image to AWS ECR.............'
                         sh """
-                        # 1. Authenticate Docker directly to your European AWS ECR Registry
-                        aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+                        # 1. Direct login using clean endpoints
+                        aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 043671580149.dkr.ecr.eu-north-1.amazonaws.com
 
-                        # 2. Build your local Hotel Prediction application container image
-                        docker build -t ${IMAGE_URI}:latest .
+                        # 2. Hardcoded tag to completely eliminate any environment string errors
+                        docker build -t 043671580149.dkr.ecr.eu-north-1.amazonaws.com/mlops-project-1:latest .
 
-                        # 3. Push the finalized Docker image live straight to your AWS Cloud repository
-                        docker push ${IMAGE_URI}:latest
+                        # 3. Push it live to your Stockholm repository
+                        docker push 043671580149.dkr.ecr.eu-north-1.amazonaws.com/mlops-project-1:latest
                         """
                     }
                 }
