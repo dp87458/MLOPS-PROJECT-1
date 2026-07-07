@@ -1,26 +1,13 @@
 pipeline {
     agent any
 
-    options {
-        // Tells Jenkins to skip its default automatic clone step
-        // This lets you use your custom generated script safely below!
-        skipDefaultCheckout()
-    }
-
     stages {
-        stage('Cloning Github repo to Jenkins') {
+        stage('Cleanup & Fresh Checkout') {
             steps {
                 script {
-                    echo 'Cloning Github repo to Jenkins...........'
-                    // This is your exact snippet script, with the completed repository URL included
-                    checkout scmGit(
-                        branches: [[name: '*/main']], 
-                        extensions: [], 
-                        userRemoteConfigs: [[
-                            credentialsId: 'github-token', 
-                            url: 'https://github.com'
-                        ]]
-                    )
+                    echo 'Force-cleaning old broken workspace cache files...'
+                    // This automatically wipes the workspace folder clean every single time!
+                    cleanWs()
                 }
             }
         }
@@ -28,7 +15,7 @@ pipeline {
         stage('Environment Setup') {
             steps {
                 script {
-                    echo 'Installing requirements inside Jenkins workspace...'
+                    echo 'Installing model dependencies (LightGBM, Flask, MLflow)...'
                     sh 'pip install --no-cache-dir -r requirements.txt'
                 }
             }
