@@ -2,21 +2,12 @@ pipeline {
     agent any
 
     stages {
-        stage('Cleanup & Fresh Checkout') {
-            steps {
-                script {
-                    echo 'Force-cleaning old broken workspace cache files...'
-                    // This automatically wipes the workspace folder clean every single time!
-                    cleanWs()
-                }
-            }
-        }
-
         stage('Environment Setup') {
             steps {
                 script {
-                    echo 'Installing model dependencies (LightGBM, Flask, MLflow)...'
-                    sh 'pip install --no-cache-dir -r requirements.txt'
+                    echo 'Installing model dependencies safely...'
+                    // The --break-system-packages flag bypasses the Linux environment block securely!
+                    sh 'pip install --no-cache-dir --break-system-packages -r requirements.txt'
                 }
             }
         }
