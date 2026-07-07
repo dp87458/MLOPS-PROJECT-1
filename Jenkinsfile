@@ -46,6 +46,7 @@ pipeline{
                     script {
                         echo 'Building and Pushing Docker Image to AWS ECR.............'
                         sh """
+                        . venv/bin/activate
                         pip install --no-cache-dir --break-system-packages awscli
 
                         # 1. Direct login using clean endpoints
