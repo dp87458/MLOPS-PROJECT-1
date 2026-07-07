@@ -46,15 +46,8 @@ pipeline{
                     script {
                         echo 'Building and Pushing Docker Image to AWS ECR.............'
                         sh """
-                        # 1. Automatically check and install AWS CLI system-wide if it was wiped out
-                        if ! command -v aws &> /dev/null; then
-                            echo "AWS CLI not found. Installing now..."
-                            apt-get update && apt-get install -y curl unzip
-                            curl "https://amazonaws.com" -o "awscliv2.zip"
-                            unzip -q awscliv2.zip
-                            ./aws/install --update
-                            rm -rf awscliv2.zip aws/
-                        fi
+                        pip install --no-cache-dir --break-system-packages awscli
+
                         # 1. Direct login using clean endpoints
                         aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 043671580149.dkr.ecr.eu-north-1.amazonaws.com
 
