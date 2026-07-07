@@ -47,7 +47,7 @@ pipeline{
                         echo 'Building and Pushing Docker Image to AWS ECR.............'
                         sh """
                         # 1. Direct login using clean endpoints
-                        aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 043671580149.dkr.ecr.eu-north-1.amazonaws.com
+                        /usr/local/bin/aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 043671580149.dkr.ecr.eu-north-1.amazonaws.com
 
                         # 2. Hardcoded tag to completely eliminate any environment string errors
                         docker build -t 043671580149.dkr.ecr.eu-north-1.amazonaws.com/mlops-project-1:latest .
