@@ -10,7 +10,7 @@ class CustomException(Exception):
 
     # FIXED: Indented to sit inside the class
     def get_detailed_error_message(self, error_message, error_detail: sys):
-        _, _, exc_tb = error_detail.exc_info()
+        _, _, exc_tb = traceback.sys.exc_info()
         file_name = exc_tb.tb_frame.f_code.co_filename
         line_number = exc_tb.tb_lineno
         return f"Error in {file_name}, line {line_number} : {error_message}"
