@@ -24,6 +24,9 @@ pipeline{
                 script{
                     echo 'Setting up our Virtual Environment and installing dependancies...........'
                     sh '''
+                    # FIX: Force delete any old, broken corrupted venv folder first!
+                    rm -rf venv ${VENV_DIR}
+
                     python3 -m venv ${VENV_DIR}
                     . ${VENV_DIR}/bin/activate
                     pip install --upgrade pip
