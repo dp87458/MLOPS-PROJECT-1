@@ -1,0 +1,274 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+/* Background */
+body{
+
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:
+    linear-gradient(rgba(0,0,0,.55),
+    rgba(0,0,0,.65)),
+    url("https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&q=80");
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+}
+
+/* Glass Container */
+
+.container{
+
+    width:850px;
+    max-width:95%;
+
+    padding:40px;
+
+    background:rgba(255,255,255,.12);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.2);
+
+    border-radius:20px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.5);
+
+    animation:fadeIn 1.2s ease;
+
+}
+
+/* Heading */
+
+.container h2{
+
+    text-align:center;
+
+    color:white;
+
+    font-size:34px;
+
+    margin-bottom:35px;
+
+    letter-spacing:2px;
+
+    text-shadow:0 0 10px gold;
+
+}
+
+/* Form */
+
+form{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+    gap:20px;
+
+}
+
+/* Inputs */
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.form-group label{
+
+    color:white;
+
+    margin-bottom:8px;
+
+    font-weight:500;
+
+}
+
+input,
+select{
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    outline:none;
+
+    font-size:15px;
+
+    background:rgba(255,255,255,.92);
+
+    transition:.3s;
+
+}
+
+input:focus,
+select:focus{
+
+    transform:scale(1.03);
+
+    box-shadow:0 0 15px #00d4ff;
+
+}
+
+/* Button */
+
+button{
+
+    grid-column:1/-1;
+
+    padding:16px;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    border:none;
+
+    border-radius:50px;
+
+    cursor:pointer;
+
+    background:linear-gradient(135deg,#FFD700,#FF8C00);
+
+    color:white;
+
+    transition:.35s;
+
+}
+
+button:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 10px 30px rgba(255,165,0,.6);
+
+}
+
+button:active{
+
+    transform:scale(.98);
+
+}
+
+/* Result */
+
+.result{
+
+    margin-top:30px;
+
+    padding:18px;
+
+    border-radius:15px;
+
+    background:rgba(255,255,255,.18);
+
+    text-align:center;
+
+    color:white;
+
+    font-size:20px;
+
+    font-weight:600;
+
+    animation:pop .7s;
+
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#FFD700;
+
+    border-radius:20px;
+
+}
+
+/* Animations */
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+@keyframes pop{
+
+    0%{
+
+        transform:scale(.5);
+
+        opacity:0;
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.container{
+
+padding:25px;
+
+}
+
+.container h2{
+
+font-size:26px;
+
+}
+
+button{
+
+font-size:16px;
+
+}
+
+}
