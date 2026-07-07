@@ -6,7 +6,7 @@ pipeline{
         AWS_ACCOUNT_ID = '043671580149'
         AWS_REGION     = 'eu-north-1'  
         ECR_REPO_NAME  = 'mlops-project-1'
-        IMAGE_URI      = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}://{ECR_REPO_NAME}"
+        IMAGE_URI      = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}://${ECR_REPO_NAME}"
     }
 
     stages{
