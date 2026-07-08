@@ -24,6 +24,11 @@ pipeline{
                 script{
                     echo 'Setting up our Virtual Environment and installing dependancies...........'
                     sh '''
+                    # 1. PERMANENT FIX: Automatically install Python3 system-wide if missing
+                    if ! command -v python3 &> /dev/null; then
+                        echo "Python3 not found inside container. Installing now..."
+                        apt-get update && apt-get install -y python3 python3-venv
+                    fi
                     # FIX: Force delete any old, broken corrupted venv folder first!
                     rm -rf venv ${VENV_DIR}
 
