@@ -67,5 +67,34 @@ pipeline{
                 }
             }
         }
+        stage('Deploy to AWS App Runner') {
+            steps {
+                // Securely binds your AWS secret strings to temporary environment tokens
+                withCredentials([
+                    string(credentialsId: 'aws-key', variable: 'AWS_ACCESS_KEY_ID'),
+                    string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')
+                ]) {
+                    script {
+                        echo 'Deploying Hotel App Container Live to AWS App Runner.............'
+                        sh """
+                        # 1. Instruct AWS to create or update your public website container application service
+                        aws apprunner create-service \
+                            --service-name mlops-project-1-service \
+                            --source-configuration '{
+                                "ImageRepository": {
+                                    "ImageIdentifier": "043671580149.dkr.ecr.eu-north-1.amazonaws.com/mlops-project-1:latest",
+                                    "ImageConfiguration": {
+                                        "Port": "8080"
+                                    },
+                                    "ImageRepositoryType": "ECR"
+                                },
+                                "AutoDeploymentsEnabled": true
+                            }' \
+                            --region eu-north-1
+                        """
+                    }
+                }
+            }
+        }
     }
 }
