@@ -57,11 +57,6 @@ pipeline{
                         # 1. Direct login using clean endpoints
                         aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 043671580149.dkr.ecr.eu-north-1.amazonaws.com
 
-                        # Fix the broken pipe by slowing down the transfer to a single stable upload stream
-                        echo '{"max-concurrent-uploads": 1}' > /etc/docker/daemon.json
-                        kill -SIGHUP 1 || true
-
-
                         # 2. Hardcoded tag to completely eliminate any environment string errors
                         docker build -t 043671580149.dkr.ecr.eu-north-1.amazonaws.com/mlops-project-1:latest .
 
