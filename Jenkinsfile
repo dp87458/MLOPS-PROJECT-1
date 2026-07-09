@@ -67,30 +67,34 @@ pipeline{
                 }
             }
         }
-        stage('Deploy to AWS App Runner') {
+        stage('Deploy to AWS ECS') {
             steps {
-                // Securely binds your AWS secret strings to temporary environment tokens
                 withCredentials([
                     string(credentialsId: 'aws-key', variable: 'AWS_ACCESS_KEY_ID'),
                     string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')
                 ]) {
                     script {
-                        echo 'Deploying Hotel App Container Live to AWS App Runner.............'
+                        echo 'Deploying Hotel App Container Live to AWS ECS Fargate.............'
                         sh """
-                        # 1. Instruct AWS to create or update your public website container application service
-                        aws apprunner create-service \
-                            --service-name mlops-project-1-service \
-                            --source-configuration '{
-                                "ImageRepository": {
-                                    "ImageIdentifier": "043671580149.dkr.ecr.eu-north-1.amazonaws.com/mlops-project-1:latest",
-                                    "ImageConfiguration": {
-                                        "Port": "8080"
-                                    },
-                                    "ImageRepositoryType": "ECR"
-                                },
-                                "AutoDeploymentsEnabled": true
-                            }' \
-                            --region eu-west-1
+                        # 1. Instruct AWS to create a clean, free-tier container cluster space
+                        aws ecs create-cluster --cluster-name mlops-project-1-cluster --region eu-north-1
+
+                        # 2. Register your exact ECR container image configuration blueprint
+                        aws ecs register-task-definition \
+                            --family mlops-project-1-task \
+                            --network-mode awsvpc \
+                            --requires-compatibilities FARGATE \
+                            --cpu "256" \
+                            --memory "512" \
+                            --container-definitions '[{
+                                "name": "mlops-project-1",
+                                "image": "043671580149.dkr.ecr.eu-north-1.amazonaws.com/mlops-project-1:latest",
+                                "portMappings": [{
+                                    "containerPort": 8080,
+                                    "hostPort": 8080
+                                }]
+                            }]' \
+                            --region eu-north-1
                         """
                     }
                 }
