@@ -90,7 +90,7 @@ pipeline{
                                 },
                                 "AutoDeploymentsEnabled": true
                             }' \
-                            --region eu-north-1
+                            --region eu-west-1
                         """
                     }
                 }
