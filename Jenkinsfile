@@ -86,6 +86,7 @@ pipeline{
                             --requires-compatibilities FARGATE \
                             --cpu "256" \
                             --memory "512" \
+                            --execution-role-arn "arn:aws:iam::043671580149:role/ecsTaskExecutionRole" \
                             --container-definitions '[{
                                 "name": "mlops-project-1",
                                 "image": "043671580149.dkr.ecr.eu-north-1.amazonaws.com/mlops-project-1:latest",
